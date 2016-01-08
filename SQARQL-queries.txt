@@ -1,0 +1,253 @@
+Endpoint: http://data.consilium.europa.eu/
+http://data.consilium.europa.eu/sparql
+
+----------------
+All votes for an act
+----------------
+
+SELECT
+?country ?vote
+where {
+
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/act>
+<http://data.consilium.europa.eu/data/public_voting/consilium/act/31342>
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/measureproperty/vote>/skos:prefLabel
+?vote
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/country>/skos:prefLabel
+?country
+
+}
+
+----------------
+All votes for all acts about fisheries
+----------------
+
+SELECT
+?observation ?act ?country ?vote
+where {
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/policyarea>
+<http://data.consilium.europa.eu/data/public_voting/consilium/policyarea/fisheries>
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/act>
+?act
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/measureproperty/vote>
+?vote
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/country>
+?country
+}
+
+----------------
+All acts about fisheries
+----------------
+
+SELECT
+DISTINCT ?act
+where {
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/policyarea>
+<http://data.consilium.europa.eu/data/public_voting/consilium/policyarea/fisheries>
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/act>
+?act
+}
+
+----------------
+All acts about fisheries with some of their properties
+----------------
+
+SELECT
+DISTINCT ?act ?name ?title ?date ?policyArea
+where {
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/policyarea>
+<http://data.consilium.europa.eu/data/public_voting/consilium/policyarea/fisheries>
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/act>
+?act
+.
+?act
+skos:prefLabel
+?name
+.
+?act
+skos:definition
+?title
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/actdate>
+?date
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/actdate>
+?date
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/policyarea>
+?policyAreaIRI
+.
+?policyAreaIRI
+skos:prefLabel
+?policyArea
+}
+
+--------------
+All properties of all acts about fisheries
+--------------
+SELECT
+DISTINCT ?act ?id ?title ?name ?propName
+where {
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/policyarea>
+<http://data.consilium.europa.eu/data/public_voting/consilium/policyarea/fisheries>
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/act>
+?act
+.
+?act
+skos:prefLabel
+?id
+.
+?act
+skos:definition
+?title
+.
+?observation
+?what
+?value
+.
+?what a <http://purl.org/linked-data/cube#DimensionProperty>
+.
+?value
+skos:prefLabel
+?name
+.
+?what
+<http://purl.org/dc/terms/title>
+?propName
+}
+
+
+
+----------------
+All properties of an act including who voted what
+----------------
+
+SELECT
+DISTINCT ?act ?id ?title ?actDate ?name ?propName ?vote
+where {
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/act>
+<http://data.consilium.europa.eu/data/public_voting/consilium/act/31342>
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/act>
+?act
+.
+?act
+skos:prefLabel
+?id
+.
+?act
+skos:definition
+?title
+.
+?observation
+?what
+?value
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/actdate>
+?actDate
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/measureproperty/vote>
+?vote
+.
+?what a <http://purl.org/linked-data/cube#DimensionProperty>
+.
+?value
+skos:prefLabel
+?name
+.
+?what
+<http://purl.org/dc/terms/title>
+?propName
+}
+
+
+----------------
+All properties of an act
+----------------
+
+SELECT
+DISTINCT ?what ?value
+where {
+
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/act>
+<http://data.consilium.europa.eu/data/public_voting/consilium/act/31342>
+.
+?observation
+?what
+?value
+.
+?what a <http://purl.org/linked-data/cube#DimensionProperty>
+}
+
+
+----------------
+All properties of an act, with their actual string value
+----------------
+
+SELECT
+DISTINCT ?what ?propName ?value ?name
+where {
+
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/act>
+<http://data.consilium.europa.eu/data/public_voting/consilium/act/31342>
+.
+?observation
+?what
+?value
+.
+?value
+skos:prefLabel
+?name
+.
+?what
+<http://purl.org/dc/terms/title>
+?propName
+.
+?what a <http://purl.org/linked-data/cube#DimensionProperty>
+}
+
+---------------------------
+COUNT ALL acts with qualified Majority
+---------------------------
+
+SELECT
+(COUNT(DISTINCT ?act) AS ?count)
+where {
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/votingrule>
+<http://data.consilium.europa.eu/data/public_voting/consilium/votingrule/qualifiedmajority>
+.
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/act>
+?act
+}
