@@ -36,14 +36,55 @@
       </form>
 
       <h2>{{vm.acts.length}} results found</h2>
-      <ul>
-        <li ng-repeat="act in vm.acts">{{act.Id}} ({{act.Date | date:"shortDate"}}) <br> {{act.Title}} <br>
-          {{act.configuration}} - {{act.policyarea}}
-          <ul>
-            <li ng-repeat="vote in act.Votes">{{vote.Country}}:{{vote.Vote}}</li>
+      <div class="panel panel-default" ng-repeat="act in vm.acts">
+        <div class="panel-heading">{{act.acttype}} - Doc. no. <strong>{{act.docnrcouncil}}</strong> Interinstitutional nr. <strong>{{act.docnrinterinst}}</strong> Act Data <strong>{{act.Date | date:"mediumDate"}}</strong></div>
+        <div class="panel-body">
+          {{act.Title}}
+          <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-xs-2 control-label">Council</label>
+            <div class="col-xs-10">
+              <p class="form-control-static">{{act.sessionnrnumber}} - {{act.configuration}}</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-xs-2 control-label">Policy Area</label>
+            <div class="col-xs-10">
+              <p class="form-control-static">{{act.policyarea}}</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-xs-2 control-label">Voting Procedure</label>
+            <div class="col-xs-10">
+              <p class="form-control-static">{{act.votingprocedure}}</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-xs-2 control-label">Voting Rule</label>
+            <div class="col-xs-10">
+              <p class="form-control-static">{{act.votingrule}}</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-xs-2 control-label">Action by Council</label>
+            <div class="col-xs-10">
+              <p class="form-control-static">{{act.actionbycouncil}}</p>
+            </div>
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item">{{act.Votes["Yes"].length}} votes in favour: <span ng-repeat="country in act.Votes['Yes']">{{country}}, </span></li>
+            <li class="list-group-item">{{act.Votes["No"].length}} votes against: <span ng-repeat="country in act.Votes['No']">{{country}}, </span></li>
+            <li class="list-group-item">{{act.Votes["Abstain"].length}} abstentions: <span ng-repeat="country in act.Votes['Abstain']">{{country}}, </span></li>
+            <li class="list-group-item">{{act.Votes["DidNotParticipate"].length}} not participating: <span ng-repeat="country in act.Votes['DidNotParticipate']">{{country}}, </span></li>
           </ul>
-        </li>
-      </ul>
+
+        </form>
+        </div>
+      </div>
 
     </div>
 

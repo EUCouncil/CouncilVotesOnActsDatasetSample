@@ -251,3 +251,23 @@ where {
 <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/act>
 ?act
 }
+
+
+
+-------------------
+Filter by date
+-------------------
+
+?observation
+<http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/actdate>
+?actDate
+.FILTER (?actDate < "2014-03-11T00:00:00+01:00"^^xsd:dateTime)
+
+
+------------------
+Filter by sub string
+------------------
+?act
+skos:definition
+?title
+. FILTER REGEX (?title, "aquaculture")

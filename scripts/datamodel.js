@@ -3,19 +3,25 @@ function Act(id,title,date){
   self.Id=id;
   self.Title=title;
   self.Date=date;
-  self.Votes = [];
+  self.Votes=[];
+  self.Votes["Yes"] = [];
+  self.Votes["No"] = [];
+  self.Votes["Abstain"] = [];
+  self.Votes["DidNotParticipate"] = [];
 
   this.Add = function (property, value, vote){
     if(property=="country")
     {
-      self.Votes.push(new Vote(value,vote));
+      self.Votes[voteMaps[vote]].push(value);
     }
     else
       self[property]=value;
   };
-}
 
-function Vote(country, vote) {
-  this.Country = country;
-  this.Vote = vote;
+  var voteMaps = {
+    "Voted in favour":"Yes",
+    "Voted against":"No",
+    "Abstained":"Abstain",
+    "Not participating":"DidNotParticipate"
+  }
 }
