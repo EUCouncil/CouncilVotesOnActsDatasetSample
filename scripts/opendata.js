@@ -1,12 +1,25 @@
 angular.module('opendataApp', [])
-
   .factory('sparqlGenerator',function($http){
-    return function(actId, policyArea){
+    return function(searchData){
+
       var assembledSparql = "SELECT DISTINCT ?act ?id ?title ?actDate ?name ?propName ?vote where {";
       //Add searchstrig for actId
-      if(actId!=undefined && actId!="") assembledSparql+="?observation <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/act> <http://data.consilium.europa.eu/data/public_voting/consilium/act/"+actId+"> . "
+      if(searchData.docNumber!=undefined && searchData.docNumber!="") assembledSparql+="?observation <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/docnrcouncil> <http://data.consilium.europa.eu/data/public_voting/consilium/docnrcouncil/"+searchData.docNumber+"> . "
+      if(searchData.interNumber!=undefined && searchData.interNumber!="") assembledSparql+="?observation <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/docnrinterinst> <http://data.consilium.europa.eu/data/public_voting/consilium/docnrinterinst/"+searchData.interNumber+"> . "
+      if(searchData.title!=undefined && searchData.title!="") assembledSparql+="?act skos:definition ?title . FILTER REGEX (?title, \""+searchData.title+"\") . "
 
-      if(policyArea!=undefined && policyArea!="") assembledSparql+="?observation <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/policyarea> <http://data.consilium.europa.eu/data/public_voting/consilium/policyarea/"+policyArea+"> . "
+      if(searchData.date.from!=undefined && searchData.date.from!=""){
+        var dateFrom=new Date(searchData.date.from);
+        assembledSparql+="?observation <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/actdate> ?actDate .FILTER (?actDate > \""+dateFrom.toISOString()+"\"^^xsd:dateTime) . ";
+      }
+
+      if(searchData.date.to!=undefined && searchData.date.to!=""){
+        var dateTo=new Date(searchData.date.to);
+        assembledSparql+="?observation <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/actdate> ?actDate .FILTER (?actDate < \""+dateTo.toISOString()+"\"^^xsd:dateTime) . ";
+      }
+
+      if(searchData.policyArea!=undefined && searchData.policyArea!="") assembledSparql+="?observation <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/policyarea> <http://data.consilium.europa.eu/data/public_voting/consilium/policyarea/"+searchData.policyArea+"> . "
+      if(searchData.councilConfig!=undefined && searchData.councilConfig!="") assembledSparql+="?observation <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/configuration> <http://data.consilium.europa.eu/data/public_voting/consilium/configuration/"+searchData.councilConfig+"> . "
 
       //Adds string for selecting act properties
       assembledSparql+="?observation "
@@ -78,10 +91,18 @@ angular.module('opendataApp', [])
 
  .controller('actsController', ['sparqlGenerator','sparqlQuery',function(sparqlGenerator,sparqlQuery) {
    var vm = this;
+   vm.searching=false;
+   vm.noresults=false;
    vm.performSearch = function() {
-     vm.sparqlQuery = sparqlGenerator(vm.actNumber,vm.policyArea);
+     vm.searching=true;
+     vm.noresults=false;
+     vm.acts=[];
+     vm.sparqlQuery = sparqlGenerator(vm.search);
      sparqlQuery(vm.sparqlQuery).then(function (data){
        vm.acts = data;
+       vm.searching=false;
+       if(vm.acts.length==0)
+        vm.noresults=true;
        console.log(vm);
      });
    };

@@ -23,19 +23,109 @@
 
     <div ng-controller="actsController as vm">
 
-      <form ng-submit="vm.performSearch()">
+      <form class="form-horizontal" ng-submit="vm.performSearch()">
         <div class="form-group">
-          <label for="actNumber">Act Number</label>
-          <input type="text" class="form-control" id="actNumber" ng-model="vm.actNumber" placeholder="Act Number">
+          <label class="col-sm-2 control-label" for="docNumber">Document Number</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="docNumber" ng-model="vm.search.docNumber" placeholder="Document Number">
+          </div>
         </div>
         <div class="form-group">
-          <label for="policyArea">Policy Area</label>
-          <input type="text" class="form-control" id="policyArea" ng-model="vm.policyArea" placeholder="Policy Area">
+          <label class="col-sm-2 control-label" for="interNumber">Interinstitutional Number</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="interNumber" ng-model="vm.search.interNumber" placeholder="Interinstitutional Number">
+          </div>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="title">Text search on Title</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="title" ng-model="vm.search.title" placeholder="Title">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <span class="col-sm-2 control-label">Dates</span>
+          <div class="col-sm-10">
+            <div class="form-group row">
+                <label for="dateFrom" class="col-md-1 control-label">From</label>
+                <div class="col-md-2">
+                    <input type="date" class="form-control" id="dateFrom" placeholder="From" ng-model="vm.search.date.from">
+                </div>
+                <label for="dateTo" class="col-md-1 control-label">To</label>
+                <div class="col-md-2">
+                    <input type="date" class="form-control" id="dateTo" placeholder="To" ng-model="vm.search.date.to">
+                </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="col-sm-12">
+            <div class="form-group row">
+              <label class="col-sm-2 control-label" for="policyArea">Policy Area</label>
+              <div class="col-md-2">
+                <select class="form-control" name="policyArea" id="policyArea" ng-model="vm.search.policyArea">
+                  <option value="">Choose...</option>
+                  <option value="agriculture">Agriculture</option>
+                  <option value="consumeraffairs">Consumer affairs</option>
+                  <option value="culture">Culture</option>
+                  <option value="economy">Economy</option>
+                  <option value="education">Education</option>
+                  <option value="employment">Employment</option>
+                  <option value="energy">Energy</option>
+                  <option value="environment">Environment</option>
+                  <option value="finances">Finances</option>
+                  <option value="fisheries">Fisheries</option>
+                  <option value="foreignffairs">Foreign affairs</option>
+                  <option value="health">Health</option>
+                  <option value="industry">Industry</option>
+                  <option value="institutional">Institutional</option>
+                  <option value="internalmarket">Internal market</option>
+                  <option value="justiceandhomeaffairs">Justice and Home Affairs</option>
+                  <option value="research">Research</option>
+                  <option value="socialpolicy">Social policy</option>
+                  <option value="space">Space</option>
+                  <option value="telecommunications">Telecommunications</option>
+                </select>
+              </div>
+
+              <label for="councilConfig" class="col-md-2 control-label">Council Configuration</label>
+              <div class="col-md-2">
+                <select class="form-control" name="policyArea" id="councilConfig" ng-model="vm.search.councilConfig">
+                  <option value="">Choose...</option>
+                  <option value="agri">Agriculture and Fisheries</option>
+                  <option value="comp">Competitiveness</option>
+                  <option value="ecofin">Economic and Financial Affairs</option>
+                  <option value="eyc">Education, Youth and Culture</option>
+                  <option value="epsco">Employment, Social Policy, Health and Consumer Affairs</option>
+                  <option value="env">Environment</option>
+                  <option value="fa">Foreign Affairs</option>
+                  <option value="ga">General Affairs</option>
+                  <option value="jha">Justice and Home Affairs</option>
+                  <option value="tte">Transport, Telecommunications and Energy</option>
+                </select>
+              </div>
+
+              <label for="inputValue" class="col-md-2 control-label">Value</label>
+              <div class="col-md-2">
+                  <input type="text" class="form-control" id="inputValue" placeholder="Value">
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      <button type="submit" ng-hide="vm.searching" class="btn btn-primary">Search</button>
+      <button type="submit" ng-show="vm.searching" disabled="disabled" class="btn btn-primary">Searching...</button>
+      <button type="reset" class="btn btn-default">Reset</button>
       </form>
 
-      <h2>{{vm.acts.length}} results found</h2>
+      <h2 ng-show="vm.acts.length>0">{{vm.acts.length}} results found.</h2>
+      <h2 ng-show="vm.searching">Searching ...</h2>
+      <h2 ng-show="vm.noresults">No results found, please widen your criteria.</h2>
       <div class="panel panel-default" ng-repeat="act in vm.acts">
         <div class="panel-heading">{{act.acttype}} - Doc. no. <strong>{{act.docnrcouncil}}</strong> Interinstitutional nr. <strong>{{act.docnrinterinst}}</strong> Act Data <strong>{{act.Date | date:"mediumDate"}}</strong></div>
         <div class="panel-body">
