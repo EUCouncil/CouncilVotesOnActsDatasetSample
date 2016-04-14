@@ -56,7 +56,6 @@
                     <input type="date" class="form-control" id="dateTo" placeholder="To" ng-model="vm.search.date.to">
                 </div>
             </div>
-
           </div>
         </div>
 
@@ -126,6 +125,7 @@
       <h2 ng-show="vm.acts.length>0">{{vm.acts.length}} results found.</h2>
       <h2 ng-show="vm.searching">Searching ...</h2>
       <h2 ng-show="vm.noresults">No results found, please widen your criteria.</h2>
+
       <div class="panel panel-default" ng-repeat="act in vm.acts">
         <div class="panel-heading">{{act.acttype}} - Doc. no. <strong>{{act.docnrcouncil}}</strong> Interinstitutional nr. <strong>{{act.docnrinterinst}}</strong> Act Data <strong>{{act.Date | date:"mediumDate"}}</strong></div>
         <div class="panel-body">

@@ -91,8 +91,10 @@ angular.module('opendataApp', [])
 
  .controller('actsController', ['sparqlGenerator','sparqlQuery',function(sparqlGenerator,sparqlQuery) {
    var vm = this;
+   
    vm.searching=false;
    vm.noresults=false;
+
    vm.performSearch = function() {
      vm.searching=true;
      vm.noresults=false;
