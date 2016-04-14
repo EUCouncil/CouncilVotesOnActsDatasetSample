@@ -106,12 +106,6 @@
                   <option value="tte">Transport, Telecommunications and Energy</option>
                 </select>
               </div>
-
-              <label for="inputValue" class="col-md-2 control-label">Value</label>
-              <div class="col-md-2">
-                  <input type="text" class="form-control" id="inputValue" placeholder="Value">
-              </div>
-
             </div>
           </div>
 
@@ -119,7 +113,7 @@
 
       <button type="submit" ng-hide="vm.searching" class="btn btn-primary">Search</button>
       <button type="submit" ng-show="vm.searching" disabled="disabled" class="btn btn-primary">Searching...</button>
-      <button type="reset" class="btn btn-default">Reset</button>
+      <button type="reset" ng-click="vm.reset()" class="btn btn-default">Reset</button>
       </form>
 
       <h2 ng-show="vm.acts.length>0">{{vm.acts.length}} results found.</h2>
