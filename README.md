@@ -6,7 +6,7 @@ The datasets are available in [RDF Data Format](http://en.wikipedia.org/wiki/Res
 
 More information on the dataset can be found on the [Open data Policy page](http://www.consilium.europa.eu/en/general-secretariat/corporate-policies/transparency/open-data/ "Open data") on [Council's website](http://www.consilium.europa.eu/).
 
-You can run this sample query page at the url: http://simonech.github.io/CouncilOpenDataQuery/
+You can run this sample query page at the url: http://eucouncil.github.io/CouncilVotesOnActsDatasetSample/
 
 ## Data Model
 
