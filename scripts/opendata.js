@@ -2,7 +2,7 @@ angular.module('opendataApp', [])
   .factory('sparqlGenerator',function($http){
     return function(searchData){
 
-      var assembledSparql = "SELECT DISTINCT ?act ?id ?title ?actDate ?name ?propName ?vote where {";
+      var assembledSparql = "SELECT DISTINCT ?act ?id ?title ?actDate ?name ?propName ?vote from <http://data.consilium.europa.eu/id/dataset/votingresults> where {";
       //Add searchstrig for actId
       if(searchData.docNumber!=undefined && searchData.docNumber!="") assembledSparql+="?observation <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/docnrcouncil> <http://data.consilium.europa.eu/data/public_voting/consilium/docnrcouncil/"+searchData.docNumber+"> . "
       if(searchData.interNumber!=undefined && searchData.interNumber!="") assembledSparql+="?observation <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/docnrinterinst> <http://data.consilium.europa.eu/data/public_voting/consilium/docnrinterinst/"+searchData.interNumber+"> . "
@@ -91,9 +91,16 @@ angular.module('opendataApp', [])
 
  .controller('actsController', ['sparqlGenerator','sparqlQuery',function(sparqlGenerator,sparqlQuery) {
    var vm = this;
-   
+
    vm.searching=false;
    vm.noresults=false;
+
+   vm.reset = function () {
+     vm.searching=false;
+     vm.noresults=false;
+     vm.acts=[];
+     vm.search=undefined;
+   };
 
    vm.performSearch = function() {
      vm.searching=true;
