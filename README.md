@@ -6,7 +6,7 @@ The datasets are available in [RDF Data Format](http://en.wikipedia.org/wiki/Res
 
 More information on the dataset can be found on the [Open data Policy page](http://www.consilium.europa.eu/en/general-secretariat/corporate-policies/transparency/open-data/ "Open data") on [Council's website](http://www.consilium.europa.eu/).
 
-You can run this sample query page at the url: http://eucouncil.github.io/CouncilVotesOnActsDatasetSample/
+You can run this sample query page at the url: http://eucouncil.github.io/CouncilVotesOnActsDatasetSample/ (demo tested with Chrome only)
 
 ## Data Model
 
@@ -107,3 +107,7 @@ skos:prefLabel
 ```
 
 More sample queries can be found in the [SPARQL-queries.txt file](SPARQL-queries.txt).
+
+## License
+
+The sample code is licensed under the [EUPL (European Union Public Licence)](http://ec.europa.eu/idabc/eupl.html).
