@@ -107,3 +107,7 @@ skos:prefLabel
 ```
 
 More sample queries can be found in the [SPARQL-queries.txt file](SPARQL-queries.txt).
+
+## License
+
+The sample code is licensed under the [EUPL (European Union Public Licence)](http://ec.europa.eu/idabc/eupl.html).
