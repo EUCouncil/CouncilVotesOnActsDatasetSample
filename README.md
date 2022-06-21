@@ -1,3 +1,8 @@
+# This code sample is "frozen" at the time of the [DiploHack](https://blog.okfn.org/2016/04/05/iplohack-in-brussels-join-us-for-the-first-hack-from-inside-the-council-of-the-european-union-building/) conference.
+
+It won't be updated any more, and is currently archived.
+
+
 # Council Voting Results
 
 This repository contains a sample application that queries the dataset about "Council votes on legislative acts".
